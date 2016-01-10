@@ -11,6 +11,11 @@ RUN apt-get install -y git-core subversion build-essential gcc-multilib libssl-d
 
 RUN useradd -ms /bin/bash openwrt
 USER openwrt
+ENV VERSION 15.05
 
-RUN git clone git://git.openwrt.org/15.05/openwrt.git
-RUN openwrt/scripts/feeds update
+RUN git clone git://git.openwrt.org/${VERSION}/openwrt.git /home/openwrt/build
+WORKDIR /home/openwrt/build/
+RUN ./scripts/feeds update -a
+RUN ./scripts/feeds install -a
+
+CMD cp /srv/.config . && make -j4
