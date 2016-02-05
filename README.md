@@ -11,9 +11,35 @@ Because the build system requires that its command are not executed by root,
 the user `openwrt` was created. The buildroot can be found in
 `/home/openwrt/openwrt`.
 
-To run a shell in the buildroot, execute the following command:
+Usage
+-----
+
+ - To build the container image, run
+
 ```sh
-docker run -t -i noonien/openwrt-buildroot:14.07 sudo -iu openwrt bash
+make
+```
+
+ - To make the config, you've to run a shell:
+
+To run a shell in the buildroot, run:
+```sh
+make run-shell
+```
+
+And then:
+
+```sh
+make defconfig
+make prereq
+make menuconfig
+cp .config /srv/  # save the config outside the container
+```
+
+ - To compile openwrt, run
+
+```sh
+make run
 ```
 
 More information on how to use this buildroot can be found on the
